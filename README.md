@@ -1,5 +1,4 @@
 # CSWHarryPotterBookSeries
-[다짐 기록 앱 만들기](https://github.com/cjs1399/Team-Sparta/tree/main/Sparta)
 
 <br>
 
