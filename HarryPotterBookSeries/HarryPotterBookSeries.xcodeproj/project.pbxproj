@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2529CADE2D93E91E000ABDEF /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 2529CADD2D93E91E000ABDEF /* Then */; };
+		2529CAE12D93E9BA000ABDEF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2529CAE02D93E9BA000ABDEF /* SnapKit */; };
+		2529CAE42D93EA06000ABDEF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 2529CAE32D93EA06000ABDEF /* RxCocoa */; };
+		2529CAE62D93EA06000ABDEF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2529CAE52D93EA06000ABDEF /* RxSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		2529CAC42D93E7D7000ABDEF /* HarryPotterBookSeries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HarryPotterBookSeries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2529CAE42D93EA06000ABDEF /* RxCocoa in Frameworks */,
+				2529CADE2D93E91E000ABDEF /* Then in Frameworks */,
+				2529CAE62D93EA06000ABDEF /* RxSwift in Frameworks */,
+				2529CAE12D93E9BA000ABDEF /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +89,10 @@
 			);
 			name = HarryPotterBookSeries;
 			packageProductDependencies = (
+				2529CADD2D93E91E000ABDEF /* Then */,
+				2529CAE02D93E9BA000ABDEF /* SnapKit */,
+				2529CAE32D93EA06000ABDEF /* RxCocoa */,
+				2529CAE52D93EA06000ABDEF /* RxSwift */,
 			);
 			productName = HarryPotterBookSeries;
 			productReference = 2529CAC42D93E7D7000ABDEF /* HarryPotterBookSeries.app */;
@@ -107,6 +122,11 @@
 			);
 			mainGroup = 2529CABB2D93E7D7000ABDEF;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2529CADC2D93E91E000ABDEF /* XCRemoteSwiftPackageReference "Then" */,
+				2529CADF2D93E9BA000ABDEF /* XCRemoteSwiftPackageReference "SnapKit" */,
+				2529CAE22D93EA06000ABDEF /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2529CAC52D93E7D7000ABDEF /* Products */;
 			projectDirPath = "";
@@ -333,6 +353,56 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2529CADC2D93E91E000ABDEF /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		2529CADF2D93E9BA000ABDEF /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		2529CAE22D93EA06000ABDEF /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2529CADD2D93E91E000ABDEF /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2529CADC2D93E91E000ABDEF /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		2529CAE02D93E9BA000ABDEF /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2529CADF2D93E9BA000ABDEF /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		2529CAE32D93EA06000ABDEF /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2529CAE22D93EA06000ABDEF /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		2529CAE52D93EA06000ABDEF /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2529CAE22D93EA06000ABDEF /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2529CABC2D93E7D7000ABDEF /* Project object */;
 }
