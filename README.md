@@ -11,7 +11,7 @@ Then | UI 선언 | SPM
 RxSwift | 비동기적 데이터 흐름 작업 | SPM
 
 
-필수 기능: Issues: [Lv1](https://github.com/cjs1399/Team-Sparta/issues/11), [Lv2](https://github.com/cjs1399/Team-Sparta/issues/12),  [Lv3](https://github.com/cjs1399/Team-Sparta/issues/13)
+필수 기능: Issues: [Lv1](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/2)
 
 도전 기능: Issues: 
 
