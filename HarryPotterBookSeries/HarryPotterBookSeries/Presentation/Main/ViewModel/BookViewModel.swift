@@ -14,7 +14,7 @@ protocol BookViewModelInput {
 }
 
 protocol BookViewModelOutput {
-    
+    var bookData: BehaviorRelay<[BookModel]> { get }
 }
 
 protocol BookViewModelType {
@@ -23,6 +23,8 @@ protocol BookViewModelType {
 }
 
 final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewModelType {
+    
+    var bookData: BehaviorRelay<[BookModel]> = BehaviorRelay(value: [])
     
     var inputs: BookViewModelInput { return self }
     var outputs: BookViewModelOutput { return self }
@@ -38,10 +40,14 @@ final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewMode
         bookService.fetchBooks { result in
             switch result {
             case .success(let books):
+                self.bookData.accept(books)
+//                print("------")
+//                print(self.bookData.value[0].title)
+//                print("------")
                 print("📚 불러온 책 목록:")
                 books.forEach { book in
                     print("- \(book.title) by \(book.author)")
-                    print("\(book)")
+        
                 }
             case .failure(let error):
                 print("🚨 오류 발생: \(error)")
