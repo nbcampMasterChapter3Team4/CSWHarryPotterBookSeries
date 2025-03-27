@@ -15,7 +15,7 @@ import RxCocoa
 final class ViewController: BaseViewController {
     
     
-    private let viewModel = OnboardingViewModel()
+    private let viewModel = BookViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI Components
