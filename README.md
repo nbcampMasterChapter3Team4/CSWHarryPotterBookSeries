@@ -11,13 +11,13 @@ Then | UI 선언 | SPM
 RxSwift | 비동기적 데이터 흐름 작업 | SPM
 
 
-필수 기능: Issues: [Lv1](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/2)
+필수 기능: Issues: [Lv1](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/2), [Lv2](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/3), [Lv3](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/4), [Lv4](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/5), [Lv5](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/6), [Lv6](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/7)
 
 도전 기능: Issues: 
 
 ### 필수 기능
 <details>
-  <summary><b>Level1</b></summary>
+  <summary><b>Level 1</b></summary>
   <div markdown="1">
     <ul>
         <img width="100" src="https://github.com/user-attachments/assets/2fd59a87-e17b-4cf4-aa72-124c3b673b56" />
@@ -36,7 +36,7 @@ RxSwift | 비동기적 데이터 흐름 작업 | SPM
   </div>
 </details>
 <details>
-  <summary><b>Level2</b></summary>
+  <summary><b>Level 2</b></summary>
   <div markdown="1">
     <ul>
       <img width="100" src="https://github.com/user-attachments/assets/625bafba-6053-4e97-a19d-c45ee0d113c2" />
@@ -57,7 +57,7 @@ RxSwift | 비동기적 데이터 흐름 작업 | SPM
 </details>
 
 <details>
-  <summary><b>Level3</b></summary>
+  <summary><b>Level 3</b></summary>
   <div markdown="1">
     <ul>
       <img width="100" src="https://github.com/user-attachments/assets/59f46511-30a1-460f-88b6-04fafb51e422" />
@@ -72,5 +72,98 @@ RxSwift | 비동기적 데이터 흐름 작업 | SPM
   </div>
 </details>
 
+<details>
+  <summary><b>Level 4</b></summary>
+  <div markdown="1">
+<aside>
+🧑🏻‍💻 `UIScrollView` 를 추가하여 스크롤할 수 있도록 구현한 후 목차(Chapters)를 왼쪽과 같이 구성해보세요.
+
+- **스크롤 속성**
+    - 책 제목과 시리즈 순서는 화면 상단에 고정
+        - ‘책 제목과 시리즈 순서’는 이 부분을 의미합니다.
+            
+
+![Image](https://github.com/user-attachments/assets/030686bf-8439-4395-a53f-b527703054e3)
+            
+   - 책 정보(책 표지, 책 제목, 저자, 출간일, 페이지수) 영역부터 목차(Chapters)까지 스크롤 가능하도록 구현
+   - 스크롤 바가 보이지 않도록 구현
+- 목차 속성
+    - `UIScrollView` 안에 `UIStackView`를 추가하고 해당 `UIStackView`안에`UILabel` 추가하여 구현
+        - 전체적인 포함 관계:
+        `UIScrollView` 안에 `UIStackView` 안에 `UILabel`들어 있는 구조
+    - 각 챕터 사이 간격은 8
+    - 타이틀(*Chapters*) 속성
+        - Font = 시스템 볼드체, 사이즈 18, 색상 black
+    - 목차 속성
+        - Font = 사이즈 14, 색상 darkGray
+- **Autolayout**
+    - 목차 영역의 `top` = Summary 영역과 24만큼 떨어져 있도록 세팅
+    - `leading`, `trailing` = superView와 20씩 떨어지도록 세팅
+    - 타이틀(*Chapters*)과 첫번째 챕터 사이 간격 8
+</aside>
+  </div>
+</details>
+
+<details>
+  <summary><b>Level 5</b></summary>
+  <div markdown="1">
+<aside>
+🧑🏻‍💻 Summary 접기/더보기 기능을 구현해보세요.
+
+- 글자수가 450자 이상인 경우 `…` 말줄임표 표시 및 `더보기` 버튼 표시
+    - 참고로, 2권(시리즈 두번째)의 요약 내용은 글자수가 450자 미만이므로 더보기 버튼이 표시되지 않아야 합니다.
+- `더보기` 버튼을 누르면 요약 텍스트 전체가 표시되고 `더보기` 버튼은 `접기` 버튼으로 변경
+- 더보기/접기 상태를 저장해 앱을 종료했다가 다시 실행했을 때에도 마지막 상태를 기억하여 표시
+    - `더보기` 버튼을 눌러 Summary를 펼친 상태로 앱을 종료했다면, 앱을 다시 실행했을 때 펼쳐진 상태로 표시되어 있습니다.
+    반대로 `접기`버튼을 눌러 접은 상태로 종료했다면 앱 종료 후 다시 실행했을 때 접은 상태로 표시되어 있습니다.
+</aside>
+  </div>
+</details>
+
+<details>
+  <summary><b>Level 6</b></summary>
+  <div markdown="1">
+<aside>
+🧑🏻‍💻 시리즈 전체(7권) 순서 중 원하는 권수의 책 정보를 볼 수 있도록 왼쪽과 같이 구현해보세요.
+
+- 전체 데이터는 `data.json`에 있으며 시리즈 순서대로 데이터가 제공됩니다.
+- 시리즈 순서 버튼을 누르면 아래 부분의 데이터가 업데이트 되어야 합니다.
+    - 화면 상단에 있는 책 제목도 함께 변경
+        
+        ![Image](https://github.com/user-attachments/assets/07dd6b89-92c0-47ca-bfbd-6117de4cff18)
+        
+    - 책 정보 영역: 책표지 이미지, 책제목, 저자, 출간일, 페이지수
+        
+
+        ![Image](https://github.com/user-attachments/assets/b1f66b02-0551-426c-86d7-4f60712de4af)
+
+        
+    - 헌정사(Dedication)
+        
+
+        ![Image](https://github.com/user-attachments/assets/4c971356-d10f-4e6b-b307-1208fe9bed0c)
+
+        
+    - 요약(Summary)
+        
+
+        ![Image](https://github.com/user-attachments/assets/de1f7954-12cb-4eac-bc96-ffaede620a24)
+
+        
+    - 목차(Chapters)
+        
+
+        ![Image](https://github.com/user-attachments/assets/49cad509-f1b2-4701-9d97-ea87633482f2)
+
+        
+- level 5에서 시리즈 권별로 더보기/접기 상태를 저장하는 기능을 잘 구현했다면, 각 시리즈 권별 마지막 더보기/접기 상태를 기억하고 있어야 합니다.
+    - ‘시리즈 순서’는 이 view를 의미합니다.
+
+        ![Image](https://github.com/user-attachments/assets/e7ae78a5-05e7-44c1-bae9-b00fea479c84)
+
+</aside>
+
+  </div>
+</details>
 
 ### 도전 기능
