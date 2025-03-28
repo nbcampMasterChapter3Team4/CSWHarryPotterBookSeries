@@ -22,6 +22,7 @@ final class BookViewController: BaseViewController {
     
     private let bookTitleView = TitleLabelView()
     private let bookTopStackView = BookIndexStackView()
+    private let bookInformationStackView = BookInformationStackView()
     
     
     // MARK: - Properties
@@ -33,8 +34,9 @@ final class BookViewController: BaseViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] data in
                 self?.bookData = data
-                if let text = self?.bookData[0].title {
-                    self?.bookTitleView.getTitleLabel().text = text
+                if let testData = self?.bookData[0] {
+                    self?.bookTitleView.getTitleLabel().text = testData.title
+                    self?.bookInformationStackView.configure(testData)
                 }
             })
             .disposed(by: disposeBag)
@@ -45,7 +47,7 @@ final class BookViewController: BaseViewController {
     }
     
     override func setLayout() {
-        view.addSubviews(bookTitleView, bookTopStackView)
+        view.addSubviews(bookTitleView, bookTopStackView, bookInformationStackView)
         
         bookTitleView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
@@ -57,6 +59,12 @@ final class BookViewController: BaseViewController {
             $0.top.equalTo(bookTitleView.snp.bottom).offset(16)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        bookInformationStackView.snp.makeConstraints {
+            $0.top.equalTo(bookTopStackView.snp.bottom).offset(10)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(5)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-5)
         }
     }
     
