@@ -29,8 +29,7 @@ class BookIndexStackView: BaseView {
             $0.setTitle("1", for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 16)
             $0.layer.cornerRadius = 23
-            $0.backgroundColor = UIColor(hex: "#007AFF")
-            // 아이폰 system blue와 같은 색입니다.
+            $0.backgroundColor = UIColor(hex: "#007AFF") // 아이폰 system blue와 같은 색입니다.
         }
     }
     

@@ -23,7 +23,6 @@ class TitleLabelView: BaseView {
             $0.font = .boldSystemFont(ofSize: 24)
             $0.textAlignment = .center
             $0.numberOfLines = 2
-//            $0.text = "Harry Potter and the Philosopher's Stone"
         }
     }
     
@@ -45,3 +44,8 @@ class TitleLabelView: BaseView {
         return titleLabel
     }
 }
+
+
+// dateForm -> 리소스가 많이 든다. ??
+// snapkit -> inset과 offset 사용 할 때 상황이 다른점이 있는가?
+// Then 라이브러리를 사용할 때 do와 then의 차이가 있나? -> 성능 차이? 아니면 다른 예외사항 처리?

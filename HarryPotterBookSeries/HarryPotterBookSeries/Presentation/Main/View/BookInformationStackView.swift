@@ -29,10 +29,7 @@ class BookInformationStackView: BaseView {
     private let releasedContentStackView = UIStackView()
     private let pageContentStackView = UIStackView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
 
-    }
     
     override func setStyles() {
         
@@ -135,9 +132,9 @@ class BookInformationStackView: BaseView {
     
     // MARK: - Methods
     
-    func getTitleLabel() -> UILabel {
-        return titleLabel
-    }
+//    func getTitleLabel() -> UILabel {
+//        return titleLabel
+//    }
     
     func configure(_ data: BookModel) {
         titleLabel.text = data.title
@@ -147,9 +144,5 @@ class BookInformationStackView: BaseView {
         }
         pageContentLabel.text = "\(data.pages)"
     }
-    
-    required init?(coder: NSCoder) {
-         fatalError("init(coder:) has not been implemented")
-     }
     
 }

@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol BookViewModelInput {
+    // 사용자의 입력
 }
 
 protocol BookViewModelOutput {
@@ -35,19 +36,13 @@ final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewMode
         getBookInformation()
     }
     
-    
     func getBookInformation() {
         bookService.fetchBooks { result in
             switch result {
             case .success(let books):
                 self.bookData.accept(books)
-//                print("------")
-//                print(self.bookData.value[0].title)
-//                print("------")
-                print("📚 불러온 책 목록:")
                 books.forEach { book in
                     print("- \(book.title) by \(book.author)")
-        
                 }
             case .failure(let error):
                 print("🚨 오류 발생: \(error)")

@@ -32,6 +32,7 @@ class DedicationStackView: BaseView {
             $0.isScrollEnabled = false
             $0.textContainerInset = .zero
             $0.textContainer.lineFragmentPadding = 0
+            $0.isEditable = false
         }
         
         dedicationStackView.do {
