@@ -142,7 +142,9 @@ class BookInformationStackView: BaseView {
     func configure(_ data: BookModel) {
         titleLabel.text = data.title
         authorContentLabel.text = data.author
-        releasedContentLabel.text = data.releaseDate
+        if let date = data.releaseDate.toFormattedDateString() {
+            releasedContentLabel.text = "\(date)"
+        }
         pageContentLabel.text = "\(data.pages)"
     }
     
