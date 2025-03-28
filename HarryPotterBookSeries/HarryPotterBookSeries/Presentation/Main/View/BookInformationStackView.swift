@@ -43,14 +43,14 @@ class BookInformationStackView: BaseView {
         
         titleLabel.do {
             $0.textColor = UIColor(hex: "#000000")
-            $0.font = UIFont.boldSystemFont(ofSize: 20)
+            $0.font = .boldSystemFont(ofSize: 20)
             $0.numberOfLines = 2
         }
         
         authorLabel.do {
             $0.text = "Author"
             $0.textColor = UIColor(hex: "#000000")
-            $0.font = UIFont.boldSystemFont(ofSize: 16)
+            $0.font = .boldSystemFont(ofSize: 16)
         }
         
         authorContentLabel.do {
@@ -61,7 +61,7 @@ class BookInformationStackView: BaseView {
         releasedLabel.do {
             $0.text = "Released"
             $0.textColor = UIColor(hex: "#000000")
-            $0.font = UIFont.boldSystemFont(ofSize: 14)
+            $0.font = .boldSystemFont(ofSize: 14)
         }
         
         releasedContentLabel.do {
@@ -72,7 +72,7 @@ class BookInformationStackView: BaseView {
         pageLabel.do {
             $0.text = "Pages"
             $0.textColor = UIColor(hex: "#000000")
-            $0.font = UIFont.boldSystemFont(ofSize: 14)
+            $0.font = .boldSystemFont(ofSize: 14)
         }
         
         pageContentLabel.do {
