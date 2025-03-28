@@ -27,7 +27,6 @@ class DedicationStackView: BaseView {
         }
         
         dedicationTextView.do {
-            $0.text = "For Jessica, who loves stories, for Anne, who loved them too, and for Di, who heard this one first"
             $0.font = .systemFont(ofSize: 14)
             $0.textColor = UIColor(hex: "#555555") // UIColor.darkGray 색상과 일치하는 hex code 입니다.
             $0.isScrollEnabled = false
@@ -40,9 +39,6 @@ class DedicationStackView: BaseView {
             $0.spacing = 8
             $0.alignment = .leading
         }
-        
-
-        
     }
     
     // MARK: - Layout Helper
@@ -63,5 +59,7 @@ class DedicationStackView: BaseView {
     
     // MARK: - Methods
     
-
+    func configure(_ data: BookModel) {
+        dedicationTextView.text = data.dedication
+    }
 }

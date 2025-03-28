@@ -26,7 +26,6 @@ class SummaryStackView: BaseView {
         }
         
         summaryTextView.do {
-            $0.text = "Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin!"
             $0.font = .systemFont(ofSize: 14)
             $0.textColor = UIColor(hex: "#555555")
             $0.isScrollEnabled = false
@@ -59,6 +58,10 @@ class SummaryStackView: BaseView {
     }
     
     // MARK: - Methods
+    
+    func configure(_ data: BookModel) {
+        summaryTextView.text = data.summary
+    }
     
 
 }
