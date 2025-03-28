@@ -23,6 +23,8 @@ final class BookViewController: BaseViewController {
     private let bookTitleView = TitleLabelView()
     private let bookTopStackView = BookIndexStackView()
     private let bookInformationStackView = BookInformationStackView()
+    private let dedicationStackView = DedicationStackView()
+    private let summaryStackView = SummaryStackView()
     
     
     // MARK: - Properties
@@ -37,6 +39,8 @@ final class BookViewController: BaseViewController {
                 if let testData = self?.bookData[0] {
                     self?.bookTitleView.getTitleLabel().text = testData.title
                     self?.bookInformationStackView.configure(testData)
+                    self?.dedicationStackView.configure(testData)
+                    self?.summaryStackView.configure(testData)
                 }
             })
             .disposed(by: disposeBag)
@@ -47,7 +51,8 @@ final class BookViewController: BaseViewController {
     }
     
     override func setLayout() {
-        view.addSubviews(bookTitleView, bookTopStackView, bookInformationStackView)
+        view.addSubviews(bookTitleView, bookTopStackView, bookInformationStackView,
+                         dedicationStackView, summaryStackView)
         
         bookTitleView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
@@ -65,6 +70,18 @@ final class BookViewController: BaseViewController {
             $0.top.equalTo(bookTopStackView.snp.bottom).offset(10)
             $0.leading.equalTo(view.safeAreaLayoutGuide).offset(5)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-5)
+        }
+        
+        dedicationStackView.snp.makeConstraints {
+            $0.top.equalTo(bookInformationStackView.snp.bottom).offset(24)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        summaryStackView.snp.makeConstraints {
+            $0.top.equalTo(dedicationStackView.snp.bottom).offset(24)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
         }
     }
     
