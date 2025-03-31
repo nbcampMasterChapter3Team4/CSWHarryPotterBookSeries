@@ -25,6 +25,9 @@ final class BookViewController: BaseViewController {
     private let bookInformationStackView = BookInformationStackView()
     private let dedicationStackView = DedicationStackView()
     private let summaryStackView = SummaryStackView()
+    private let chaptersView = ChaptersView()
+    private let scrollView = UIScrollView()
+    private let stackView = UIStackView()
     
     
     // MARK: - Properties
@@ -41,6 +44,7 @@ final class BookViewController: BaseViewController {
                     self?.bookInformationStackView.configure(testData)
                     self?.dedicationStackView.configure(testData)
                     self?.summaryStackView.configure(testData)
+                    self?.chaptersView.configure(testData)
                 }
             })
             .disposed(by: disposeBag)
@@ -48,11 +52,24 @@ final class BookViewController: BaseViewController {
     
     override func setStyles() {
         view.backgroundColor = UIColor(hex: "#FFFFFF")
+        
+        scrollView.do {
+            $0.showsVerticalScrollIndicator = false
+        }
+        
+        stackView.do {
+            $0.axis = .vertical
+            $0.spacing = 24
+            $0.alignment = .fill
+            $0.distribution = .fill
+
+        }
     }
     
     override func setLayout() {
-        view.addSubviews(bookTitleView, bookTopStackView, bookInformationStackView,
-                         dedicationStackView, summaryStackView)
+        view.addSubviews(bookTitleView, bookTopStackView, scrollView)
+        scrollView.addSubviews(stackView)
+        stackView.addArrangedSubviews(bookInformationStackView, dedicationStackView, summaryStackView, chaptersView)
         
         bookTitleView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
@@ -65,27 +82,18 @@ final class BookViewController: BaseViewController {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
-        
-        bookInformationStackView.snp.makeConstraints {
+    
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(bookTopStackView.snp.bottom).offset(10)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(5)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-5)
+            $0.directionalHorizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.bottom.equalToSuperview()
         }
         
-        dedicationStackView.snp.makeConstraints {
-            $0.top.equalTo(bookInformationStackView.snp.bottom).offset(24)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-        }
-        
-        summaryStackView.snp.makeConstraints {
-            $0.top.equalTo(dedicationStackView.snp.bottom).offset(24)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
         }
     }
-    
-    
 }
 
 
