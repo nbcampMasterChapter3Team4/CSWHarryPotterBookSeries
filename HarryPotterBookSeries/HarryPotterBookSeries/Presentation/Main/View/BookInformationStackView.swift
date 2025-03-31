@@ -121,20 +121,15 @@ class BookInformationStackView: BaseView {
         
         mainContainer.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.height.greaterThanOrEqualTo(200)
         }
         
         imageView.snp.makeConstraints {
             $0.width.equalTo(100)
-            $0.height.equalTo(150)
+            $0.height.equalTo(imageView.snp.width).multipliedBy(1.5)
         }
     }
     
     // MARK: - Methods
-    
-//    func getTitleLabel() -> UILabel {
-//        return titleLabel
-//    }
     
     func configure(_ data: BookModel) {
         titleLabel.text = data.title
