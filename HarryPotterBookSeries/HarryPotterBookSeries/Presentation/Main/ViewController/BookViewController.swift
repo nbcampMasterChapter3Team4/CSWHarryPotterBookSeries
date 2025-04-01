@@ -35,6 +35,7 @@ final class BookViewController: BaseViewController {
     var itemCount = 0
     let itemWidth: CGFloat = 30
     let spacing: CGFloat = 10
+    private var selectedIndex: Int = 0
 
     
     private var bookData: [BookModel] = []
@@ -145,18 +146,19 @@ extension BookViewController: UICollectionViewDataSource, UICollectionViewDelega
         return bookData.count
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookIndexCell.id, for: indexPath) as? BookIndexCell else {
             return UICollectionViewCell()
         }
-        cell.configure(index: indexPath.item)
+        let isSelected = indexPath.item == selectedIndex
+        cell.configure(index: indexPath.item, isSelected: isSelected)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedBookIndex = indexPath.item
-        print("Selected chapter: \(selectedBookIndex)")
-        viewModel.inputs.didTapIndexButton(selectedBookIndex)
+        selectedIndex = indexPath.item
+        collectionView.reloadData() // 모든 셀 리로드하여 선택 상태 반영
+
+        viewModel.inputs.didTapIndexButton(indexPath.item)
     }
 }

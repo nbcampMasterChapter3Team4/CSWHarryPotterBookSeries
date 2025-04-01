@@ -62,7 +62,18 @@ final class BookIndexCell: UICollectionViewCell {
 
     // MARK: - Configure
     
-    func configure(index: Int) {
+    func configure(index: Int, isSelected: Bool) {
         indexLabel.text = "\(index + 1)"
+        updateStyle(isSelected: isSelected)
+    }
+
+    func updateStyle(isSelected: Bool) {
+        if isSelected {
+            indexLabel.backgroundColor = UIColor(hex: "#007AFF")
+            indexLabel.textColor = UIColor(hex: "#FFFFFF")
+        } else {
+            indexLabel.backgroundColor = UIColor(hex: "#D3D3D3")
+            indexLabel.textColor = UIColor(hex: "#007AFF")
+        }
     }
 }
