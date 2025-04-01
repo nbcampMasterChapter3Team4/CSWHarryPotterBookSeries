@@ -35,6 +35,20 @@ final class BookViewController: BaseViewController {
     private var bookData: [BookModel] = []
     
     override func bindViewModel() {
+        
+        summaryStackView.getToggleMoreButton().rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.inputs.didTapMoreButton()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.isTapMoreButton
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isExpanded in
+                self?.summaryStackView.setExpanded(isExpanded)
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.outputs.bookData
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] data in
@@ -62,7 +76,7 @@ final class BookViewController: BaseViewController {
             $0.spacing = 24
             $0.alignment = .fill
             $0.distribution = .fill
-
+            $0.isLayoutMarginsRelativeArrangement = true // ✅ 이거 추가
         }
     }
     
@@ -90,8 +104,9 @@ final class BookViewController: BaseViewController {
         }
         
         stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
             $0.width.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 }
