@@ -92,7 +92,7 @@ class SummaryStackView: UIStackView {
         updateTextLabel()
     }
     
-    // configure 수정
+
     func configure(_ data: BookModel, index: Int, isExpanded: Bool) {
         fullText = data.summary
         self.isExpanded = isExpanded
@@ -120,7 +120,7 @@ class SummaryStackView: UIStackView {
                 summaryTextLabel.text = fullText
             }
             toggleMoreButton.setTitle("더 보기", for: .normal)
-            summaryTextLabel.numberOfLines = 0 // or 제한하고 싶으면 3 같은 값
+            summaryTextLabel.numberOfLines = 0
         }
     }
     
