@@ -11,11 +11,13 @@ import RxCocoa
 import RxSwift
 
 protocol BookViewModelInput {
-    // 사용자의 입력
+    // 사용자의 입력 여기에 이제 더보기 기능 버튼을 누를 경우가 들어갈 것
+    func didTapMoreButton()
 }
 
 protocol BookViewModelOutput {
     var bookData: BehaviorRelay<[BookModel]> { get }
+    var isTapMoreButton: BehaviorRelay<Bool> { get }
 }
 
 protocol BookViewModelType {
@@ -25,8 +27,9 @@ protocol BookViewModelType {
 
 final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewModelType {
     
-    var bookData: BehaviorRelay<[BookModel]> = BehaviorRelay(value: [])
     
+    var bookData: BehaviorRelay<[BookModel]> = BehaviorRelay(value: [])
+    var isTapMoreButton: BehaviorRelay<Bool> = BehaviorRelay(value: SummaryStateStorage.isExpanded)
     var inputs: BookViewModelInput { return self }
     var outputs: BookViewModelOutput { return self }
     
@@ -34,6 +37,13 @@ final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewMode
     
     init() {
         getBookInformation()
+    }
+    
+    func didTapMoreButton() {
+        let current = isTapMoreButton.value
+        let toggled = !current
+        isTapMoreButton.accept(toggled)
+        SummaryStateStorage.isExpanded = toggled
     }
     
     func getBookInformation() {
