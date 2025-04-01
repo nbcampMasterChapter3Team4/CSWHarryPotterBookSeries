@@ -11,7 +11,6 @@ import RxCocoa
 import RxSwift
 
 protocol BookViewModelInput {
-    // 사용자의 입력 여기에 이제 더보기 기능 버튼을 누를 경우가 들어갈 것
     func didTapIndexButton(_ index: Int)
     func didTapMoreButton()
 }
@@ -31,30 +30,36 @@ final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewMode
     
     
     var bookData: BehaviorRelay<[BookModel]> = BehaviorRelay(value: [])
-    var isTapMoreButton: BehaviorRelay<Bool> = BehaviorRelay(value: SummaryStateStorage.isExpanded)
+    var isTapMoreButton: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var selectedBook: BehaviorRelay<(book: BookModel, index: Int)?> = BehaviorRelay(value: nil)
     
     var inputs: BookViewModelInput { return self }
     var outputs: BookViewModelOutput { return self }
     
     private let bookService = BookService()
+    private var currentIndex: Int = 0
+
     
     init() {
         getBookInformation()
     }
     
     func didTapIndexButton(_ index: Int) {
+        currentIndex = index
         let currentBooks = bookData.value
         guard index < currentBooks.count else { return }
+
         let book = currentBooks[index]
         selectedBook.accept((book: book, index: index))
+
+        let saved = SummaryStateStorage.isExpanded(for: index)
+        isTapMoreButton.accept(saved)
     }
     
     func didTapMoreButton() {
-        let current = isTapMoreButton.value
-        let toggled = !current
+        let toggled = !isTapMoreButton.value
         isTapMoreButton.accept(toggled)
-        SummaryStateStorage.isExpanded = toggled
+        SummaryStateStorage.setExpanded(toggled, for: currentIndex)
     }
     
     func getBookInformation() {
@@ -63,11 +68,13 @@ final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewMode
             case .success(let books):
                 self.bookData.accept(books)
                 if let first = books.first {
+                    self.currentIndex = 0
                     self.selectedBook.accept((book: first, index: 0))
+                    let saved = SummaryStateStorage.isExpanded(for: 0)
+                    self.isTapMoreButton.accept(saved)
                 }
             case .failure(let error):
                 print("🚨 오류 발생: \(error)")
             }
         }
-    }
-}
+    }}

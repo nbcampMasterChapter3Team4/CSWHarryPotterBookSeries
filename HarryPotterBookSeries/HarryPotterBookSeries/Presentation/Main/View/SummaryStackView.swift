@@ -93,17 +93,16 @@ class SummaryStackView: UIStackView {
     }
     
     // configure 수정
-    func configure(_ data: BookModel) {
+    func configure(_ data: BookModel, index: Int, isExpanded: Bool) {
         fullText = data.summary
-        isExpanded = SummaryStateStorage.isExpanded
+        self.isExpanded = isExpanded
         updateTextLabel()
 
         if data.summary.count < 450 {
             toggleMoreButton.isHidden = true
         } else {
             toggleMoreButton.isHidden = false
-            let title = isExpanded ? "접기" : "더 보기"
-            toggleMoreButton.setTitle(title, for: .normal) 
+            toggleMoreButton.setTitle(isExpanded ? "접기" : "더 보기", for: .normal)
         }
     }
     

@@ -69,11 +69,14 @@ final class BookViewController: BaseViewController {
             .compactMap { $0 }
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] (book, index) in
-                self?.bookTitleView.getTitleLabel().text = book.title
-                self?.bookInformationStackView.configure(book, index: index)
-                self?.dedicationStackView.configure(book)
-                self?.summaryStackView.configure(book)
-                self?.chaptersView.configure(book)
+                guard let self = self else { return }
+                let isExpanded = self.viewModel.outputs.isTapMoreButton.value
+
+                self.bookTitleView.getTitleLabel().text = book.title
+                self.bookInformationStackView.configure(book, index: index)
+                self.dedicationStackView.configure(book)
+                self.summaryStackView.configure(book, index: index, isExpanded: isExpanded)
+                self.chaptersView.configure(book)
             })
             .disposed(by: disposeBag)
     }
@@ -103,7 +106,7 @@ final class BookViewController: BaseViewController {
             $0.spacing = 24
             $0.alignment = .fill
             $0.distribution = .fill
-            $0.isLayoutMarginsRelativeArrangement = true // ✅ 이거 추가
+            $0.isLayoutMarginsRelativeArrangement = true
         }
     }
     
@@ -157,8 +160,7 @@ extension BookViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = indexPath.item
-        collectionView.reloadData() // 모든 셀 리로드하여 선택 상태 반영
-
+        collectionView.reloadData()
         viewModel.inputs.didTapIndexButton(indexPath.item)
     }
 }
