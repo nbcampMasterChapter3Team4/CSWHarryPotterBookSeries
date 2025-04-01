@@ -16,6 +16,7 @@ class SummaryStackView: BaseView {
     
     private let summaryLabel = UILabel()
     private let summaryTextView = UITextView()
+    private let toggleMoreButton = UIButton()
     private let summaryStackView = UIStackView()
     
     override func setStyles() {
@@ -34,6 +35,13 @@ class SummaryStackView: BaseView {
             $0.isEditable = false
         }
         
+        toggleMoreButton.do {
+            $0.setTitle("더보기", for: .normal)
+            $0.setTitleColor(UIColor(hex: "#007AFF"), for: .normal)
+            $0.titleLabel?.font = .systemFont(ofSize: 14)
+            $0.isHidden = false
+        }
+        
         summaryStackView.do {
             $0.axis = .vertical
             $0.spacing = 8
@@ -45,7 +53,7 @@ class SummaryStackView: BaseView {
     // MARK: - Layout Helper
     
     override func setLayout() {
-        addSubviews(summaryStackView)
+        addSubviews(summaryStackView, toggleMoreButton)
         summaryStackView.addArrangedSubviews(summaryLabel, summaryTextView)
 
         summaryStackView.snp.makeConstraints {
@@ -54,6 +62,11 @@ class SummaryStackView: BaseView {
     
         summaryTextView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
+        }
+        
+        toggleMoreButton.snp.makeConstraints {
+            $0.top.equalTo(summaryStackView.snp.bottom).offset(10)
+            $0.trailing.equalToSuperview()
         }
 
     }
