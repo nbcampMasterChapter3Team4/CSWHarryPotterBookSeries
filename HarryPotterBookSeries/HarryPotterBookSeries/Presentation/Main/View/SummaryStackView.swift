@@ -10,90 +10,122 @@ import UIKit
 import Then
 import SnapKit
 
-class SummaryStackView: BaseView {
+class SummaryStackView: UIStackView {
     
     // MARK: - UI Components
     
     private let summaryLabel = UILabel()
-    private let summaryTextView = UITextView()
+    private let summaryTextLabel = UILabel()
+    private let moreButtonStackView = UIStackView()
+    private let spacerView = UIView()
     private let toggleMoreButton = UIButton()
-    private let summaryStackView = UIStackView()
     
-    override func setStyles() {
+    private var isExpanded: Bool = false
+    private var fullText: String = ""
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setStyles()
+        setLayout()
+    }
+    
+    func setStyles() {
+        axis = .vertical
+        spacing = 8
+        alignment = .leading
+        
         summaryLabel.do {
             $0.text = "Summary"
             $0.textColor = UIColor(hex: "#000000")
             $0.font = .boldSystemFont(ofSize: 18)
         }
         
-        summaryTextView.do {
+        summaryTextLabel.do {
             $0.font = .systemFont(ofSize: 14)
             $0.textColor = UIColor(hex: "#555555")
-            $0.isScrollEnabled = false
-            $0.textContainerInset = .zero
-            $0.textContainer.lineFragmentPadding = 0
-            $0.isEditable = false
+            $0.numberOfLines = 0
+            $0.lineBreakMode = .byWordWrapping
+        }
+        
+        moreButtonStackView.do {
+            $0.axis = .horizontal
+            $0.alignment = .center
+            $0.distribution = .fill
         }
         
         toggleMoreButton.do {
-            $0.setTitle("더보기", for: .normal)
+            $0.setTitle("더 보기", for: .normal)
             $0.setTitleColor(UIColor(hex: "#007AFF"), for: .normal)
             $0.titleLabel?.font = .systemFont(ofSize: 14)
             $0.isHidden = false
+            $0.setContentHuggingPriority(.required, for: .horizontal)
         }
-        
-        summaryStackView.do {
-            $0.axis = .vertical
-            $0.spacing = 8
-            $0.alignment = .fill
-        }
-        
     }
     
     // MARK: - Layout Helper
     
-    override func setLayout() {
-        addSubviews(summaryStackView, toggleMoreButton)
-        summaryStackView.addArrangedSubviews(summaryLabel, summaryTextView)
-
-        summaryStackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+    func setLayout() {
+        addArrangedSubviews(summaryLabel, summaryTextLabel, moreButtonStackView)
+        moreButtonStackView.addArrangedSubviews(spacerView, toggleMoreButton)
     
-        summaryTextView.snp.makeConstraints {
+        summaryTextLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
         }
-        
-        toggleMoreButton.snp.makeConstraints {
-            $0.top.equalTo(summaryStackView.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview()
-        }
 
+        spacerView.snp.makeConstraints {
+            $0.height.equalTo(0)
+        }
+        
+        moreButtonStackView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+        }
     }
     
     // MARK: - Methods
     
+    func getToggleMoreButton() -> UIButton {
+        return toggleMoreButton
+    }
+    
+    func setExpanded(_ expanded: Bool) {
+        isExpanded = expanded
+        updateTextLabel()
+    }
+    
+    // configure 수정
     func configure(_ data: BookModel) {
-        summaryTextView.text = data.summary
-        setTextViewText()
+        fullText = data.summary
+        isExpanded = SummaryStateStorage.isExpanded
+        updateTextLabel()
+
         if data.summary.count < 450 {
             toggleMoreButton.isHidden = true
-            toggleMoreButton.snp.remakeConstraints {
-                $0.height.equalTo(0)
-            }
-            
-        }
-    }
-    
-    func setTextViewText(maxCharacters: Int = 450) {
-        guard let text = summaryTextView.text else { return }
-        if text.count >= maxCharacters {
-            let truncatedText = String(text.prefix(maxCharacters)) + "..."
-            summaryTextView.text = truncatedText
         } else {
-            summaryTextView.text = text
+            toggleMoreButton.isHidden = false
+            let title = isExpanded ? "접기" : "더 보기"
+            toggleMoreButton.setTitle(title, for: .normal) 
         }
     }
     
-
+    
+    private func updateTextLabel(maxCharacters: Int = 450) {
+        if isExpanded {
+            summaryTextLabel.text = fullText
+            toggleMoreButton.setTitle("접기", for: .normal)
+            summaryTextLabel.numberOfLines = 0
+        } else {
+            if fullText.count > maxCharacters {
+                let truncated = String(fullText.prefix(maxCharacters)) + "..."
+                summaryTextLabel.text = truncated
+            } else {
+                summaryTextLabel.text = fullText
+            }
+            toggleMoreButton.setTitle("더 보기", for: .normal)
+            summaryTextLabel.numberOfLines = 0 // or 제한하고 싶으면 3 같은 값
+        }
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
