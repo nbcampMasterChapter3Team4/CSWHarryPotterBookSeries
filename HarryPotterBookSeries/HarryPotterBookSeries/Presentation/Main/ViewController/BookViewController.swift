@@ -59,14 +59,20 @@ final class BookViewController: BaseViewController {
             .subscribe(onNext: { [weak self] data in
                 self?.bookData = data
                 self?.itemCount = data.count
-                print("\(self?.bookData.count)")
-                if let testData = self?.bookData[0] {
-                    self?.bookTitleView.getTitleLabel().text = testData.title
-                    self?.bookInformationStackView.configure(testData)
-                    self?.dedicationStackView.configure(testData)
-                    self?.summaryStackView.configure(testData)
-                    self?.chaptersView.configure(testData)
-                }
+                self?.bookIndexCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+
+        
+        viewModel.outputs.selectedBook
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (book, index) in
+                self?.bookTitleView.getTitleLabel().text = book.title
+                self?.bookInformationStackView.configure(book, index: index)
+                self?.dedicationStackView.configure(book)
+                self?.summaryStackView.configure(book)
+                self?.chaptersView.configure(book)
             })
             .disposed(by: disposeBag)
     }
@@ -149,6 +155,8 @@ extension BookViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected chapter: \(indexPath.item + 1)")
+        let selectedBookIndex = indexPath.item
+        print("Selected chapter: \(selectedBookIndex)")
+        viewModel.inputs.didTapIndexButton(selectedBookIndex)
     }
 }
