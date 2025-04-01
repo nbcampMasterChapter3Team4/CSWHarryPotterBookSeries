@@ -75,6 +75,24 @@ class SummaryStackView: BaseView {
     
     func configure(_ data: BookModel) {
         summaryTextView.text = data.summary
+        setTextViewText()
+        if data.summary.count < 450 {
+            toggleMoreButton.isHidden = true
+            toggleMoreButton.snp.remakeConstraints {
+                $0.height.equalTo(0)
+            }
+            
+        }
+    }
+    
+    func setTextViewText(maxCharacters: Int = 450) {
+        guard let text = summaryTextView.text else { return }
+        if text.count >= maxCharacters {
+            let truncatedText = String(text.prefix(maxCharacters)) + "..."
+            summaryTextView.text = truncatedText
+        } else {
+            summaryTextView.text = text
+        }
     }
     
 
