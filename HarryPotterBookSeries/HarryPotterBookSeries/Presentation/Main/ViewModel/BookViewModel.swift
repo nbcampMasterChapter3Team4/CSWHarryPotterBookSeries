@@ -19,6 +19,7 @@ protocol BookViewModelOutput {
     var bookData: BehaviorRelay<[BookModel]> { get }
     var isTapMoreButton: BehaviorRelay<Bool> { get }
     var selectedBook: BehaviorRelay<(book: BookModel, index: Int)?> { get }
+    var errorMessage: PublishRelay<String> { get }
 }
 
 protocol BookViewModelType {
@@ -32,6 +33,7 @@ final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewMode
     var bookData: BehaviorRelay<[BookModel]> = BehaviorRelay(value: [])
     var isTapMoreButton: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     var selectedBook: BehaviorRelay<(book: BookModel, index: Int)?> = BehaviorRelay(value: nil)
+    let errorMessage = PublishRelay<String>()
     
     var inputs: BookViewModelInput { return self }
     var outputs: BookViewModelOutput { return self }
@@ -66,6 +68,7 @@ final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewMode
         bookService.fetchBooks { result in
             switch result {
             case .success(let books):
+
                 self.bookData.accept(books)
                 if let first = books.first {
                     self.currentIndex = 0
@@ -75,6 +78,7 @@ final class BookViewModel: BookViewModelInput, BookViewModelOutput, BookViewMode
                 }
             case .failure(let error):
                 print("🚨 오류 발생: \(error)")
+                self.errorMessage.accept("책 정보를 불러오는데 실패했어요.\n잠시 후 다시 시도해주세요.")
             }
         }
     }}

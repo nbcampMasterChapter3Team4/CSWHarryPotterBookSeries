@@ -79,6 +79,13 @@ final class BookViewController: BaseViewController {
                 self.chaptersView.configure(book)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.errorMessage
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] message in
+                self?.showAlert(message: message)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func setStyles() {
@@ -139,6 +146,12 @@ final class BookViewController: BaseViewController {
             $0.width.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
+    }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 }
 
