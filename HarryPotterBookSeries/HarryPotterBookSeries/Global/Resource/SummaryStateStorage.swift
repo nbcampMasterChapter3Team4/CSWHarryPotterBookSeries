@@ -8,14 +8,15 @@
 import Foundation
 
 enum SummaryStateStorage {
-    private static let key = "isSummaryExpanded"
+    private static func key(for index: Int) -> String {
+        return "isSummaryExpanded_\(index)"
+    }
 
-    static var isExpanded: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: key) // 기본값 false
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: key)
-        }
+    static func isExpanded(for index: Int) -> Bool {
+        return UserDefaults.standard.bool(forKey: key(for: index))
+    }
+
+    static func setExpanded(_ value: Bool, for index: Int) {
+        UserDefaults.standard.set(value, forKey: key(for: index))
     }
 }

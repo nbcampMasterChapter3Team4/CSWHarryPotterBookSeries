@@ -131,13 +131,21 @@ class BookInformationStackView: BaseView {
     
     // MARK: - Methods
     
-    func configure(_ data: BookModel) {
+    func configure(_ data: BookModel, index: Int) {
         titleLabel.text = data.title
         authorContentLabel.text = data.author
+        
         if let date = data.releaseDate.toFormattedDateString() {
-            releasedContentLabel.text = "\(date)"
+            releasedContentLabel.text = date
         }
+
         pageContentLabel.text = "\(data.pages)"
+
+        if index < ImageLiterals.allPosters.count {
+            imageView.image = ImageLiterals.allPosters[index]
+        } else {
+            imageView.image = nil
+        }
     }
     
 }

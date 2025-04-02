@@ -21,7 +21,7 @@ final class BookViewController: BaseViewController {
     // MARK: - UI Components
     
     private let bookTitleView = TitleLabelView()
-    private let bookTopStackView = BookIndexStackView()
+    private let bookIndexCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let bookInformationStackView = BookInformationStackView()
     private let dedicationStackView = DedicationStackView()
     private let summaryStackView = SummaryStackView()
@@ -31,6 +31,12 @@ final class BookViewController: BaseViewController {
     
     
     // MARK: - Properties
+    
+    var itemCount = 0
+    let itemWidth: CGFloat = 30
+    let spacing: CGFloat = 10
+    private var selectedIndex: Int = 0
+
     
     private var bookData: [BookModel] = []
     
@@ -53,19 +59,50 @@ final class BookViewController: BaseViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] data in
                 self?.bookData = data
-                if let testData = self?.bookData[0] {
-                    self?.bookTitleView.getTitleLabel().text = testData.title
-                    self?.bookInformationStackView.configure(testData)
-                    self?.dedicationStackView.configure(testData)
-                    self?.summaryStackView.configure(testData)
-                    self?.chaptersView.configure(testData)
-                }
+                self?.itemCount = data.count
+                self?.bookIndexCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+
+        
+        viewModel.outputs.selectedBook
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (book, index) in
+                guard let self = self else { return }
+                let isExpanded = self.viewModel.outputs.isTapMoreButton.value
+
+                self.bookTitleView.getTitleLabel().text = book.title
+                self.bookInformationStackView.configure(book, index: index)
+                self.dedicationStackView.configure(book)
+                self.summaryStackView.configure(book, index: index, isExpanded: isExpanded)
+                self.chaptersView.configure(book)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.errorMessage
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] message in
+                self?.showAlert(message: message)
             })
             .disposed(by: disposeBag)
     }
     
     override func setStyles() {
         view.backgroundColor = UIColor(hex: "#FFFFFF")
+        
+        bookIndexCollectionView.do {
+            let layout = $0.collectionViewLayout as! UICollectionViewFlowLayout
+             layout.scrollDirection = .horizontal
+             layout.minimumInteritemSpacing = 10
+             layout.itemSize = CGSize(width: 30, height: 30)
+
+             $0.register(BookIndexCell.self, forCellWithReuseIdentifier: BookIndexCell.id)
+             $0.showsHorizontalScrollIndicator = false
+             $0.backgroundColor = .clear
+             $0.dataSource = self
+             $0.delegate = self
+        }
         
         scrollView.do {
             $0.showsVerticalScrollIndicator = false
@@ -76,12 +113,12 @@ final class BookViewController: BaseViewController {
             $0.spacing = 24
             $0.alignment = .fill
             $0.distribution = .fill
-            $0.isLayoutMarginsRelativeArrangement = true // ✅ 이거 추가
+            $0.isLayoutMarginsRelativeArrangement = true
         }
     }
     
-    override func setLayout() {
-        view.addSubviews(bookTitleView, bookTopStackView, scrollView)
+    override func setLayout() {        
+        view.addSubviews(bookTitleView, bookIndexCollectionView, scrollView)
         scrollView.addSubviews(stackView)
         stackView.addArrangedSubviews(bookInformationStackView, dedicationStackView, summaryStackView, chaptersView)
         
@@ -91,14 +128,15 @@ final class BookViewController: BaseViewController {
             $0.height.equalTo(60)
         }
         
-        bookTopStackView.snp.makeConstraints {
+        bookIndexCollectionView.snp.remakeConstraints {
             $0.top.equalTo(bookTitleView.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(CGFloat(itemCount) * itemWidth + CGFloat(itemCount - 1) * spacing)
+            $0.height.equalTo(40)
         }
     
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(bookTopStackView.snp.bottom).offset(10)
+            $0.top.equalTo(bookIndexCollectionView.snp.bottom).offset(10)
             $0.directionalHorizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.bottom.equalToSuperview()
         }
@@ -109,7 +147,33 @@ final class BookViewController: BaseViewController {
             $0.bottom.equalToSuperview()
         }
     }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 
 
+extension BookViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return bookData.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookIndexCell.id, for: indexPath) as? BookIndexCell else {
+            return UICollectionViewCell()
+        }
+        let isSelected = indexPath.item == selectedIndex
+        cell.configure(index: indexPath.item, isSelected: isSelected)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedIndex = indexPath.item
+        collectionView.reloadData()
+        viewModel.inputs.didTapIndexButton(indexPath.item)
+    }
+}
