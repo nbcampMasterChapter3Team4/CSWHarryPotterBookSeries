@@ -13,7 +13,7 @@ RxSwift | 비동기적 데이터 흐름 작업 | SPM
 
 필수 기능: Issues: [Lv1](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/2), [Lv2](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/3), [Lv3](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/4), [Lv4](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/5), [Lv5](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/6), [Lv6](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/7)
 
-도전 기능: Issues: 
+도전 기능: Issues: [Lv7](https://github.com/nbcampMasterChapter3Team4/CSWHarryPotterBookSeries/issues/7)
 
 ### 필수 기능
 <details>
@@ -167,3 +167,18 @@ RxSwift | 비동기적 데이터 흐름 작업 | SPM
 </details>
 
 ### 도전 기능
+
+<details>
+  <summary><b>Level 7</b></summary>
+  <div markdown="1">
+<aside>
+🧑🏻‍💻 iOS 16.0과 호환 가능한 iPhone 모델(SE 2세대, 16 Pro Max 등)의 다양한 디바이스 지원과 Portrait 모드/ Landscape 모드를 대응하여 왼쪽과 같이 구현해보세요.
+
+- iOS 16.0 호환 모델 확인: [https://support.apple.com/ko-kr/guide/iphone/iphe3fa5df43/16.0/ios/16.0](https://support.apple.com/ko-kr/guide/iphone/iphe3fa5df43/18.0/ios/18.0)
+- iOS 16 이상 모든 버전을 지원할 수 있도록 구현
+- Portrait 모드와 Landscape 모드 대응
+- 콘텐츠가 노치나 다이나믹 아일랜드 영역에 가려지지 않도록 구현해보세요.
+- Autolayout이 제대로 구현되어있지 않다면 콘솔창에 Autolayout 관련 경고 메시지가 출력됩니다. 디바이스 방향을 바꾸더라도 (Portrait 모드 ↔ Landscape 모드) 콘솔창에 Autolayout 관련 경고 메시지가 뜨지 않도록 구현해보세요.
+</aside>
+  </div>
+</details>
