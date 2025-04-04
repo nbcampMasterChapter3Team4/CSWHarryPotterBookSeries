@@ -18,7 +18,6 @@ class BaseView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        bindViewModel()
         setStyles()
         setLayout()
     }
@@ -28,8 +27,6 @@ class BaseView: UIView {
         print("🧵 \(viewName) has been successfully Removed")
     }
     
-    /// Data 와 UI 를 bind 합니다.
-    func bindViewModel() {}
     /// View 의 Style 을 set 합니다.
     func setStyles() {}
     /// View 의 Layout 을 set 합니다.

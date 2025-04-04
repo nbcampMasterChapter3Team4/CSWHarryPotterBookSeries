@@ -29,8 +29,6 @@ class BookInformationStackView: BaseView {
     private let releasedContentStackView = UIStackView()
     private let pageContentStackView = UIStackView()
     
-
-    
     override func setStyles() {
         
         imageView.do {

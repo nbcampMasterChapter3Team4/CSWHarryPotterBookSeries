@@ -38,8 +38,6 @@ final class BookViewController: BaseViewController {
     private var selectedIndex: Int = 0
 
     
-    private var bookData: [BookModel] = []
-    
     override func bindViewModel() {
         
         summaryStackView.getToggleMoreButton().rx.tap
@@ -58,7 +56,6 @@ final class BookViewController: BaseViewController {
         viewModel.outputs.bookData
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] data in
-                self?.bookData = data
                 self?.itemCount = data.count
                 self?.bookIndexCollectionView.reloadData()
             })
@@ -159,7 +156,7 @@ final class BookViewController: BaseViewController {
 
 extension BookViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return bookData.count
+        return itemCount
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
